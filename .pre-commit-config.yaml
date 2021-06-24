@@ -4,12 +4,12 @@ repos:
     hooks:
       # - id: terraform_fmt
       - id: terraform_tflint
-      - id: terraform_tfsec
-      - id: checkov
-      - id: terrascan
-      - id: terraform_docs
-      - id: terragrunt_validate
-      - id: terragrunt_fmt
+      # - id: terraform_tfsec
+      # - id: checkov
+      # - id: terrascan
+      # - id: terraform_docs
+      # - id: terragrunt_validate
+      # - id: terragrunt_fmt
   - repo: local
     hooks:
       - id: terraform_fmt

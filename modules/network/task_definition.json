@@ -1,0 +1,11 @@
+[
+  {
+    "name": "FruitShop",
+    "image": "214259409527.dkr.ecr.ap-southeast-1.amazonaws.com/fruit-shop:0.0.1",
+    "essential": true,
+    "portMappings": [{
+      "containerPort": 80,
+      "protocol": "tcp"
+    }]
+  }
+]

@@ -9,13 +9,13 @@ variable "vpc_cidr" {
   type        = string
 }
 
-variable "subnet_cidr" {
+variable "subnet_cidr_public" {
   description = "subnet_cidr"
   default     = "10.0.1.0/24"
   type        = string
 }
 
-variable "subnet_cidr" {
+variable "subnet_cidr_private" {
   description = "subnet_cidr"
   default     = "10.0.10.0/24"
   type        = string
