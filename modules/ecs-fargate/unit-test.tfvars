@@ -1,0 +1,10 @@
+# VPC vars
+vpc_cidr            = "11.0.0.0/16"
+subnet_cidr_public  = "11.0.1.0/24"
+subnet_cidr_private = "11.0.10.0/24"
+# ECS vars
+service_name   = "fruit-shop"
+image_registry = "214259409527.dkr.ecr.ap-southeast-1.amazonaws.com/fruit-shop:0.0.1"
+task_replicas  = 1
+task_cpu       = 512
+task_memory    = 1024

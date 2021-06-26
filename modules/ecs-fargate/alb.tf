@@ -8,7 +8,7 @@ resource "aws_lb" "ecs_alb" {
   subnets            = [aws_subnet.subnet_ap1_public.id, aws_subnet.subnet_ap1_private.id]
 
   enable_deletion_protection = false
-  depends_on                 = [aws_internet_gateway.gw]
+  depends_on                 = [aws_internet_gateway.igw]
   tags = merge(
     var.tf_tags,
     {

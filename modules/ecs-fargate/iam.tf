@@ -19,6 +19,8 @@ EOF
 
 }
 
+######################################################## Fargate IAM Role Policy ########################################################
+
 resource "aws_iam_role_policy" "fargate_iam_role_policy" {
   name = "Fargate-Role-Policy"
   role = aws_iam_role.fargate_iam_role.id

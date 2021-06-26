@@ -1,6 +1,8 @@
 resource "aws_vpc" "vpc_ap1" {
   cidr_block = var.vpc_cidr
 
+  enable_dns_hostnames = true
+
   tags = merge(
     var.tf_tags,
     {
@@ -8,7 +10,7 @@ resource "aws_vpc" "vpc_ap1" {
   }, )
 }
 
-resource "aws_internet_gateway" "gw" {
+resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.vpc_ap1.id
 
   tags = merge(
@@ -44,4 +46,20 @@ resource "aws_subnet" "subnet_ap1_private" {
     {
       Name = "subnet-ap1-private"
   }, )
+}
+
+data "aws_route_tables" "rts" {
+  vpc_id = aws_vpc.vpc_ap1.id
+}
+
+resource "aws_route_table_association" "associate_rtb_subnet" {
+  subnet_id      = aws_subnet.subnet_ap1_public.id
+  route_table_id = tolist(data.aws_route_tables.rts.ids)[0]
+}
+
+resource "aws_route" "route_to_igw" {
+  route_table_id         = tolist(data.aws_route_tables.rts.ids)[0]
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.igw.id
+  depends_on             = [aws_internet_gateway.igw]
 }
