@@ -2,7 +2,9 @@
 
 ## Description
 This project stimulates an ECS infrastructure created by Terraform/Terragrunt and has Terratest for unit testing
-## Getting started
+## Architecture
+![Architecture](./architecture.jpeg)
+## Usage
 ### Prerequisite
 Have AWS credentials configuration. Some recommended ways:
 - [aws-vault](https://github.com/99designs/aws-vault) session
