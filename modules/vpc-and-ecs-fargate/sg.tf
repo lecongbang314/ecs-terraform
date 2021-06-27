@@ -1,7 +1,7 @@
 ######################################################## ALB Security group ########################################################
 
 resource "aws_security_group" "alb_sg" {
-  name        = "alb_sg"
+  name        = "ALB-SG-${var.service_name}-${var.environment}"
   description = "ALB Security Group"
   vpc_id      = aws_vpc.vpc_ap1.id
 
@@ -31,7 +31,7 @@ resource "aws_security_group" "alb_sg" {
 ######################################################## ECS Security group ########################################################
 
 resource "aws_security_group" "ecs_sg" {
-  name        = "ecs_sg"
+  name        = "ECS-SG-${var.service_name}-${var.environment}"
   description = "ECS Security Group"
   vpc_id      = aws_vpc.vpc_ap1.id
 

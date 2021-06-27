@@ -4,15 +4,23 @@ repos:
     hooks:
       # - id: terraform_fmt
       - id: terraform_tflint
-      # - id: terraform_tfsec
+      - id: terraform_tfsec
       # - id: checkov
       # - id: terrascan
       # - id: terraform_docs
-      # - id: terragrunt_validate
+      - id: terragrunt_validate
+        exclude: ^modules/
       # - id: terragrunt_fmt
+      #   exclude: ^modules/
   - repo: local
     hooks:
       - id: terraform_fmt
         name: terraform_fmt
         entry: bash -c 'terraform fmt -recursive'
+        language: system
+  - repo: local
+    hooks:
+      - id: terragrunt_fmt
+        name: terragrunt_fmt
+        entry: bash -c 'terragrunt hclfmt'
         language: system

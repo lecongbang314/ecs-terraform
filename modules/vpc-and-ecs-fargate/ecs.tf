@@ -1,7 +1,7 @@
 ######################################################## ECS cluster ########################################################
 
 resource "aws_ecs_cluster" "ecs_cluster" {
-  name = "${var.service_name}-Cluster"
+  name = "${var.service_name}-${var.environment}-cluster"
   setting {
     name  = "containerInsights"
     value = "enabled"
@@ -38,7 +38,7 @@ resource "aws_ecs_task_definition" "task" {
 
 resource "aws_ecs_service" "service" {
 
-  name            = "${var.service_name}-service"
+  name            = "${var.service_name}-service-${var.environment}"
   task_definition = aws_ecs_task_definition.task.arn
   desired_count   = var.task_replicas
   cluster         = aws_ecs_cluster.ecs_cluster.id

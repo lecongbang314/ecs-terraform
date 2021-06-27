@@ -1,7 +1,7 @@
 ######################################################## Fargate IAM Role ########################################################
 
 resource "aws_iam_role" "fargate_iam_role" {
-  name               = "Fargate-Role"
+  name               = "Fargate-Role-${var.environment}"
   assume_role_policy = <<EOF
 {
 "Version": "2012-10-17",
@@ -22,7 +22,7 @@ EOF
 ######################################################## Fargate IAM Role Policy ########################################################
 
 resource "aws_iam_role_policy" "fargate_iam_role_policy" {
-  name = "Fargate-Role-Policy"
+  name = "Fargate-Role-Policy-${var.environment}"
   role = aws_iam_role.fargate_iam_role.id
 
   policy = <<EOF

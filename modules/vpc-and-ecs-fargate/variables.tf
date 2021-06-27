@@ -30,6 +30,11 @@ variable "service_name" {
   type        = string
 }
 
+variable "environment" {
+  description = "Infra environment"
+  type        = string
+}
+
 variable "image_registry" {
   description = "Registry of image"
   type        = string
