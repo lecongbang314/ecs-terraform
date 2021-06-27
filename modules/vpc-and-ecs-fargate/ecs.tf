@@ -24,7 +24,7 @@ resource "aws_ecs_task_definition" "task" {
 
   container_definitions = data.template_file.ecs_task_definition.rendered
 
-  family                   = "${var.service_name}-task"
+  family                   = "${var.service_name}-${var.environment}-task"
   cpu                      = var.task_cpu
   memory                   = var.task_memory
   requires_compatibilities = ["FARGATE"]
@@ -38,7 +38,7 @@ resource "aws_ecs_task_definition" "task" {
 
 resource "aws_ecs_service" "service" {
 
-  name            = "${var.service_name}-service-${var.environment}"
+  name            = "${var.service_name}-${var.environment}-service"
   task_definition = aws_ecs_task_definition.task.arn
   desired_count   = var.task_replicas
   cluster         = aws_ecs_cluster.ecs_cluster.id

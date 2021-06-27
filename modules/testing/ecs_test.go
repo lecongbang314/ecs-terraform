@@ -1,11 +1,9 @@
 package test
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/gruntwork-io/terratest/modules/aws"
-	"github.com/gruntwork-io/terratest/modules/random"
 	"github.com/gruntwork-io/terratest/modules/terraform"
 
 	awsSDK "github.com/aws/aws-sdk-go/aws"
@@ -16,11 +14,10 @@ import (
 func TestTerraformAwsEcsExample(t *testing.T) {
 	t.Parallel()
 
-	expectedClusterName := fmt.Sprintf("terratest-aws-ecs-example-cluster-%s", random.UniqueId())
-	expectedServiceName := fmt.Sprintf("terratest-aws-ecs-example-service-%s", random.UniqueId())
-
+	expectedClusterName := "fruit-shop-test-cluster"
+	expectedServiceName := "fruit-shop-test-service"
 	// Pick a random AWS region to test in. This helps ensure your code works in all regions.
-	awsRegion := aws.GetRandomStableRegion(t, []string{"us-east-1", "eu-west-1"}, nil)
+	awsRegion := aws.GetRandomStableRegion(t, []string{"ap-southeast-1"}, nil)
 
 	// Construct the terraform options with default retryable errors to handle the most common retryable errors in
 	// terraform testing.
@@ -28,12 +25,13 @@ func TestTerraformAwsEcsExample(t *testing.T) {
 		// The path to where our Terraform code is located
 		TerraformDir: "../vpc-and-ecs-fargate",
 
-		// Variables to pass to our Terraform code using -var options
-		Vars: map[string]interface{}{
-			"cluster_name": expectedClusterName,
-			"service_name": expectedServiceName,
-			"region":       awsRegion,
-		},
+		// // Variables to pass to our Terraform code using -var options
+		// Vars: map[string]interface{}{
+		// 	"cluster_name": expectedClusterName,
+		// 	"service_name": expectedServiceName,
+		// 	"region":       awsRegion,
+		// },
+		VarFiles: []string{"test.tfvars"},
 	})
 
 	// At the end of the test, run `terraform destroy` to clean up any resources that were created
@@ -53,13 +51,14 @@ func TestTerraformAwsEcsExample(t *testing.T) {
 	// Look up the ECS service by name
 	service := aws.GetEcsService(t, awsRegion, expectedClusterName, expectedServiceName)
 
-	assert.Equal(t, int64(0), awsSDK.Int64Value(service.DesiredCount))
+	assert.Equal(t, int64(1), awsSDK.Int64Value(service.DesiredCount))
 	assert.Equal(t, "FARGATE", awsSDK.StringValue(service.LaunchType))
 
 	// Look up the ECS task definition by ARN
 	task := aws.GetEcsTaskDefinition(t, awsRegion, taskDefinition)
 
-	assert.Equal(t, "256", awsSDK.StringValue(task.Cpu))
-	assert.Equal(t, "512", awsSDK.StringValue(task.Memory))
+	assert.Equal(t, "512", awsSDK.StringValue(task.Cpu))
+	assert.Equal(t, "1024", awsSDK.StringValue(task.Memory))
 	assert.Equal(t, "awsvpc", awsSDK.StringValue(task.NetworkMode))
+
 }
