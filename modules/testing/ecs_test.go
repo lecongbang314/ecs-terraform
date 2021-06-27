@@ -16,7 +16,6 @@ func TestTerraformAwsEcsExample(t *testing.T) {
 
 	expectedClusterName := "fruit-shop-test-cluster"
 	expectedServiceName := "fruit-shop-test-service"
-	// Pick a random AWS region to test in. This helps ensure your code works in all regions.
 	awsRegion := aws.GetRandomStableRegion(t, []string{"ap-southeast-1"}, nil)
 
 	// Construct the terraform options with default retryable errors to handle the most common retryable errors in
@@ -24,14 +23,7 @@ func TestTerraformAwsEcsExample(t *testing.T) {
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		// The path to where our Terraform code is located
 		TerraformDir: "../vpc-and-ecs-fargate",
-
-		// // Variables to pass to our Terraform code using -var options
-		// Vars: map[string]interface{}{
-		// 	"cluster_name": expectedClusterName,
-		// 	"service_name": expectedServiceName,
-		// 	"region":       awsRegion,
-		// },
-		VarFiles: []string{"test.tfvars"},
+		VarFiles:     []string{"test.tfvars"},
 	})
 
 	// At the end of the test, run `terraform destroy` to clean up any resources that were created
