@@ -4,7 +4,7 @@ subnet_cidr_public  = "11.0.1.0/24"
 subnet_cidr_private = "11.0.10.0/24"
 # ECS vars
 service_name   = "fruit-shop"
-environment = "test"
+environment    = "test"
 image_registry = "214259409527.dkr.ecr.ap-southeast-1.amazonaws.com/fruit-shop:0.0.1"
 task_replicas  = 1
 task_cpu       = 512
